@@ -8,8 +8,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-&$1ed!i$8+a2f6!3&d)4yfo6-cr-u%_0o0%ofpj82q$8#ky@$9"
-
 
 # Application definition
 
@@ -20,6 +18,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Developer installed apps
+    "users.apps.UsersConfig",
 ]
 
 MIDDLEWARE = [
@@ -51,18 +51,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "ATTENDLY.config.wsgi.application"
-
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -104,3 +92,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "users.User"
