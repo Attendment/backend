@@ -13,8 +13,12 @@ pytest-django = "==4.5.2"
 pytest-cov = "*"
 factory-boy = "*"
 faker = "*"
+django-extensions = "*"
 
 [dev-packages]
+ipython = "*"
+django-extensions = "*"
+werkzeug = "*"
 
 [requires]
 python_version = "3.10"
