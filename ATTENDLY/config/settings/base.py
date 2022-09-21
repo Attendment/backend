@@ -20,6 +20,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Developer installed apps
     "users.apps.UsersConfig",
+    "attendances.apps.AttendancesConfig",
+    "fingerprints.apps.FingerprintsConfig",
+    "students.apps.StudentsConfig",
 ]
 
 MIDDLEWARE = [
