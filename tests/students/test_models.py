@@ -1,7 +1,7 @@
 # type: ignore
 import pytest
 from . import factories
-from students.models import Student
+from students.models import Programme, Student, Course, Room
 
 
 @pytest.mark.django_db
@@ -10,32 +10,56 @@ def test_create_student():
     Test to ensure that creating a student works.
     """
 
-    student1 = factories.StudentFactory(
-        first_name="Gabriel",
-        last_name="Rockson",
-        student_id="20594513",
-        index_number="3558018",
-        level="400",
-    )
-    student2 = factories.StudentFactory(
-        first_name="Gabriel",
-        last_name="Rockson",
-        other_names="Abeiku",
-        student_id="23892342",
-        index_number="38232837",
-        level="300",
-    )
+    student = factories.StudentFactory()
 
-    assert Student.objects.count() == 2
+    db_object = Student.objects.first()
+    programme_of_study = Programme.objects.first()
 
-    assert Student.objects.first().first_name == student1.first_name
-    assert (
-        str(Student.objects.get(student_id="20594513"))
-        == f"{student1.first_name} {student1.last_name}"
-    )
+    assert Student.objects.count() == 1
+    assert str(db_object) == student.get_full_name()
+    assert db_object.programme_of_study == programme_of_study
 
-    assert Student.objects.last().first_name == student2.first_name
-    assert (
-        str(Student.objects.get(student_id="23892342"))
-        == f"{student2.first_name} {student2.other_names} {student2.last_name}"
-    )
+
+@pytest.mark.django_db
+def test_create_programme():
+    """
+    Test to ensure that creting a programme object works
+    """
+
+    programme = factories.ProgrammeFactory()
+
+    db_object = Programme.objects.first()
+
+    assert Programme.objects.count() == 1
+    assert str(db_object) == programme.name
+    assert db_object.name == programme.name
+    assert db_object.college == programme.college
+
+
+@pytest.mark.django_db
+def test_create_course():
+    """
+    Test to ensure that creating a course object works
+    """
+    course = factories.CourseFactory()
+
+    db_object = Course.objects.first()
+
+    assert Course.objects.count() == 1
+    assert str(db_object) == course.name
+    assert db_object.name == course.name
+    assert db_object.code == course.code
+    assert db_object.level == course.level
+
+
+@pytest.mark.django_db
+def test_create_room():
+    """
+    Test to ensure that creating a room object works
+    """
+    room = factories.RoomFactory()
+
+    db_object = Room.objects.first()
+
+    assert Room.objects.count() == 1
+    assert str(db_object) == room.name

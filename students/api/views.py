@@ -1,53 +1,59 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.viewsets import ModelViewSet
 
 from students.api.serializers import (
-    ExamSerializer,
-    ProgrammeSerializer,
-    RoomSerializer,
-    StudentSerializer,
+    ExamCreateSerializer,
+    ExamReadSerializer,
+    ProgrammeCreateUpdateSerializer,
+    ProgrammeReadSerializer,
+    RoomCreateSerializer,
+    RoomReadSerializer,
+    StudentCreateUpdateSerializer,
+    StudentReadSerializer,
 )
-from students.models import Exam, Programme, Student, Room
+from students.models import Exam, Programme, Room, Student
 
 
-class StudentListCreateAPIView(ListCreateAPIView):
-    serializer_class = StudentSerializer
+# --------------------------------- Student Related views
+class StudentViewSet(ModelViewSet):
     queryset = Student.objects.all()  # type: ignore
 
+    def get_serializer_class(self):
+        if self.action in ["list", "retrieve", "destroy"]:
+            return StudentReadSerializer
+        elif self.action in ["create", "update", "partial_update"]:
+            return StudentCreateUpdateSerializer
 
-class StudentRetrieveUpdateDeleteAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = StudentSerializer
-    queryset = Student.objects.all()  # type: ignore
-    lookup_field = "id"
 
-
-class ProgrammeListCreateAPIView(ListCreateAPIView):
-    serializer_class = ProgrammeSerializer
+# --------------------------------- Programme Related views
+class ProgrammeViewSet(ModelViewSet):
     queryset = Programme.objects.all()  # type: ignore
 
+    def get_serializer_class(self):
+        if self.action in ["list", "retrieve", "destroy"]:
+            return ProgrammeReadSerializer
+        elif self.action in ["create", "update", "partial_update"]:
+            return ProgrammeCreateUpdateSerializer
 
-class ProgrammeRetrieveUpdateDeleteAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = ProgrammeSerializer
-    queryset = Programme.objects.all()  # type: ignore
-    lookup_field = "id"
 
-
-class RoomListCreateAPIView(ListCreateAPIView):
-    serializer_class = RoomSerializer
+# ---------------------------------- Room Related views
+class RoomViewSet(ModelViewSet):
     queryset = Room.objects.all()  # type: ignore
 
+    def get_serializer_class(self):
+        if self.action in ["list", "retrieve", "destroy"]:
+            return RoomReadSerializer
+        elif self.action in ["create", "update", "partial_update"]:
+            return RoomCreateSerializer
 
-class RoomRetrieveUpdateDeleteAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = RoomSerializer
-    queryset = Room.objects.all()  # type: ignore
-    lookup_field = "id"
+
+# ----------------------------------- Exam related views
 
 
-class ExamListCreateAPIView(ListCreateAPIView):
-    serializer_class = ExamSerializer
+class ExamViewSet(ModelViewSet):
     queryset = Exam.objects.all()  # type: ignore
 
-
-class ExamRetrieveUpdateDeleteAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = ExamSerializer
-    queryset = Exam.objects.all()  # type: ignore
-    lookup_field = "id"
+    def get_serializer_class(self):
+        if self.action in ["list", "retrieve", "destroy"]:
+            return ExamReadSerializer
+        elif self.action in ["create", "update", "partial_update"]:
+            return ExamCreateSerializer

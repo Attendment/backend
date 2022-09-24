@@ -13,7 +13,7 @@ class User(AbstractUser):
         help_text="Is this user an invigilator?",
         default=False,  # type: ignore
     )
-
+    # lecturer id
     REQUIRED_FIELDS = ["email", "first_name", "last_name"]
 
     def __str__(self):

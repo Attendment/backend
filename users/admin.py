@@ -7,24 +7,25 @@ from .models import User
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = (
-        "first_name",
-        "last_name",
-        "username",
-        "email",
-        "date_joined",
-        "last_login",
-        "is_superuser",
-        "is_staff",
-        "is_active",
-        "invigilator",
+        'password',
+        'last_login',
+        'is_superuser',
+        'username',
+        'first_name',
+        'last_name',
+        'email',
+        'is_staff',
+        'is_active',
+        'date_joined',
+        'id',
+        'invigilator',
     )
     list_filter = (
-        "last_login",
-        "is_superuser",
-        "is_staff",
-        "is_active",
-        "date_joined",
-        "invigilator",
+        'last_login',
+        'is_superuser',
+        'is_staff',
+        'is_active',
+        'date_joined',
+        'invigilator',
     )
-    raw_id_fields = ("groups", "user_permissions")
-    readonly_fields = ("password", "date_joined", "last_login")
+    raw_id_fields = ('groups', 'user_permissions')
