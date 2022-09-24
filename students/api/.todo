@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<todo version="0.1.20">
+    <note priority="veryhigh" time="1663956812">
+        Work on the serializers
+    </note>
+    <note priority="high" time="1663956818">
+        Work on the views
+    </note>
+    <note priority="medium" time="1663956824">
+        Work on the urls
+    </note>
+</todo>
