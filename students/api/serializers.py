@@ -2,7 +2,6 @@ from rest_framework import serializers
 
 from students.models import Programme, Student, Room, Exam
 from users.api.serializers import InvigilatorSerializer
-from users.models import User
 
 
 class ProgrammeSerializer(serializers.ModelSerializer):
@@ -42,8 +41,8 @@ class RoomSerializer(serializers.ModelSerializer):
 
 
 class ExamSerializer(serializers.ModelSerializer):
-    students = StudentSerializer(many=True)
-    rooms = RoomSerializer(many=True)
+    students = StudentSerializer(many=True, read_only=True)
+    rooms = RoomSerializer(many=True, read_only=True)
 
     class Meta:
         model = Exam
