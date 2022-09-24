@@ -1,8 +1,11 @@
 from django.urls import path
 
 from students.api.views import (
+    ExamListCreateAPIView,
     ProgrammeListCreateAPIView,
     ProgrammeRetrieveUpdateDeleteAPIView,
+    RoomListCreateAPIView,
+    RoomRetrieveUpdateDeleteAPIView,
     StudentListCreateAPIView,
     StudentRetrieveUpdateDeleteAPIView,
 )
@@ -25,5 +28,17 @@ urlpatterns = [
         "programmes/<str:id>/",
         ProgrammeRetrieveUpdateDeleteAPIView.as_view(),
         name="retrieve-update-delete-programmes",
+    ),
+    path("rooms", RoomListCreateAPIView.as_view(), name="list-create-rooms"),
+    path(
+        "rooms/<str:id>/",
+        RoomRetrieveUpdateDeleteAPIView.as_view(),
+        name="retrieve-update-delete-rooms",
+    ),
+    path("exams", ExamListCreateAPIView.as_view(), name="list-create-exams"),
+    path(
+        "exams/<str:id>/",
+        RoomRetrieveUpdateDeleteAPIView.as_view(),
+        name="retrieve-update-delete-exams",
     ),
 ]
