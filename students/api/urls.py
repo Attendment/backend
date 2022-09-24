@@ -8,6 +8,7 @@ from students.api.views import (
     RoomRetrieveUpdateDeleteAPIView,
     StudentListCreateAPIView,
     StudentRetrieveUpdateDeleteAPIView,
+    ExamRetrieveUpdateDeleteAPIView,
 )
 
 
@@ -38,7 +39,7 @@ urlpatterns = [
     path("exams", ExamListCreateAPIView.as_view(), name="list-create-exams"),
     path(
         "exams/<str:id>/",
-        RoomRetrieveUpdateDeleteAPIView.as_view(),
+        ExamRetrieveUpdateDeleteAPIView.as_view(),
         name="retrieve-update-delete-exams",
     ),
 ]
