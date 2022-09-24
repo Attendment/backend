@@ -1,9 +1,7 @@
-from datetime import timezone
 from django.db import models
 from django.db.models.fields import uuid
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
-from django.utils import timezone
 
 User = settings.AUTH_USER_MODEL
 
@@ -52,12 +50,14 @@ class Student(models.Model):
         max_length=8,
         null=False,
         blank=False,
+        unique=True,
     )
     index_number = models.CharField(
         verbose_name=_("Student Index Number"),
         max_length=8,
         null=False,
         blank=False,
+        unique=True,
     )
     level = models.CharField(
         verbose_name=_("Level of Student"),
@@ -74,7 +74,12 @@ class Student(models.Model):
         related_query_name="student",
         default="",
     )
-    # registered_exams
+    registered_exams = models.ManyToManyField(
+        "students.Exam",
+        related_name="students",
+        related_query_name="student",
+        blank=True,
+    )
     # fingerprint
 
     def get_full_name(self) -> str:
@@ -172,11 +177,6 @@ class Exam(models.Model):
         max_length=3,
         choices=Student.YearInSchool.choices,
         default=Student.YearInSchool.LEVEL_100,
-    )
-    students = models.ManyToManyField(
-        "students.Student",
-        related_name="registered_exams",
-        related_query_name="registered_exam",
     )
     rooms = models.ManyToManyField(Room)
     start = models.DateTimeField(
