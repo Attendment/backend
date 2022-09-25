@@ -1,3 +1,23 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
 
-# Register your models here.
+from .models import ExamAttendance, StudentAttendance
+
+
+@admin.register(ExamAttendance)
+class ExamAttendanceAdmin(admin.ModelAdmin):
+    list_display = ('id', 'created', 'exam', 'room')
+    list_filter = ('created', 'exam', 'room')
+
+
+@admin.register(StudentAttendance)
+class StudentAttendanceAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'created',
+        'student',
+        'exam',
+        'room',
+        'exam_attendance',
+    )
+    list_filter = ('created', 'student', 'exam', 'room', 'exam_attendance')
