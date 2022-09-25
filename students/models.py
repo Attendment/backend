@@ -1,7 +1,9 @@
+from django.conf import settings
 from django.db import models
 from django.db.models.fields import uuid
 from django.utils.translation import gettext_lazy as _
-from django.conf import settings
+
+from fingerprints.models import Fingerprint
 
 User = settings.AUTH_USER_MODEL
 
@@ -58,6 +60,13 @@ class Student(models.Model):
         null=False,
         blank=False,
         unique=True,
+    )
+    fingerprint = models.OneToOneField(
+        verbose_name=_("Fingerprint"),
+        to=Fingerprint,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     level = models.CharField(
         verbose_name=_("Level of Student"),
