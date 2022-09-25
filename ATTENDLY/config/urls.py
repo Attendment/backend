@@ -18,6 +18,7 @@ urlpatterns = [
     path("api/v1/", include("users.api.urls", namespace="users")),
     path("api/v1/", include("students.api.urls", namespace="students")),
     path("api/v1/", include("fingerprints.api.urls", namespace="fingerprints")),
+    path("api/v1/", include("attendances.api.urls", namespace="attendances")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
