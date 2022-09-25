@@ -23,7 +23,9 @@ class Fingerprint(models.Model):
         blank=False,
         null=False,
     )
-    binary = models.BinaryField()
+    binary = models.BinaryField(
+        verbose_name=_("Fingerprint Data"), null=True, blank=True
+    )
 
     def __str__(self):
         return f"{self.id}"
