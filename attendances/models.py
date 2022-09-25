@@ -74,6 +74,13 @@ class StudentAttendance(models.Model):
         null=False,
         related_name="room_student_attendances",
     )
+    exam_attendance = models.ForeignKey(
+        to=ExamAttendance,
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+        related_name="student_attendances",
+    )
 
     def __str__(self):
         return f"{self.student.get_full_name()} {self.exam.course_name}"
