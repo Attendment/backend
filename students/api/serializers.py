@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from students.models import Programme, Student, Room, Exam
 from users.api.serializers import InvigilatorSerializer
+from fingerprints.api.serializers import FingerprintSerializerMinimal
 
 
 class ProgrammeCreateUpdateSerializer(serializers.ModelSerializer):
@@ -41,6 +42,7 @@ class ExamSerializerMinimal(serializers.ModelSerializer):
 class StudentReadSerializer(serializers.ModelSerializer):
     programme_name = serializers.ReadOnlyField(source="programme_of_study.name")
     registered_exams = ExamSerializerMinimal(many=True, read_only=True)
+    fingerprint = FingerprintSerializerMinimal()
 
     class Meta:
         model = Student
@@ -55,6 +57,7 @@ class StudentReadSerializer(serializers.ModelSerializer):
             "level",
             "programme_name",
             "programme_of_study",
+            "fingerprint",
             "registered_exams",
         ]
 
@@ -74,6 +77,7 @@ class StudentCreateUpdateSerializer(serializers.ModelSerializer):
             "student_id",
             "index_number",
             "level",
+            "fingerprint",
             "programme_of_study",
             "registered_exams",
         ]
