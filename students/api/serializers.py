@@ -63,9 +63,6 @@ class StudentReadSerializer(serializers.ModelSerializer):
 
 
 class StudentCreateUpdateSerializer(serializers.ModelSerializer):
-
-    registered_exams = Exam
-
     class Meta:
         model = Student
         fields = [
