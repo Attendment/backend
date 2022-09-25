@@ -10,6 +10,7 @@ class Fingerprint(models.Model):
         unique=True,
         blank=False,
         null=False,
+        editable=False,
     )
     created = models.DateTimeField(
         verbose_name=_("Created"),

@@ -1,4 +1,3 @@
-from enum import unique
 import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -7,6 +6,7 @@ from students.models import Exam, Room, Student
 
 class ExamAttendance(models.Model):
     id = models.UUIDField(
+        editable=False,
         unique=True,
         blank=False,
         null=False,
@@ -42,6 +42,7 @@ class ExamAttendance(models.Model):
 
 class StudentAttendance(models.Model):
     id = models.UUIDField(
+        editable=False,
         unique=True,
         primary_key=True,
         blank=False,
