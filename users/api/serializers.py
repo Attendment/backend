@@ -9,6 +9,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
+            "id",
             "username",
             "first_name",
             "last_name",
@@ -17,11 +18,14 @@ class RegisterUserSerializer(serializers.ModelSerializer):
             "invigilator",
         ]
 
+    # TODO: make the password write only
+    extra_kwargs = {"password": {"write_only": True}}
+
     def create(self, validated_data):
         try:
             user = User.objects.get(username=validated_data["username"])
         except ObjectDoesNotExist:
-            user = User.objects.create_teacher_user(**validated_data)
+            user = User.objects.create_user(**validated_data)
         return user
 
 
