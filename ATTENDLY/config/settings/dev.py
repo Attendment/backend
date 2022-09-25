@@ -18,3 +18,7 @@ DATABASES = {
         "PORT": 5432,
     }
 }
+
+# Media files settings
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
