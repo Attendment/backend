@@ -28,5 +28,8 @@ class Fingerprint(models.Model):
         verbose_name=_("Fingerprint Data"), null=True, blank=True
     )
 
+    class Meta:
+        ordering = ("-created",)
+
     def __str__(self):
         return f"{self.id}"

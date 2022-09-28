@@ -29,20 +29,14 @@ class ExamSerializerMinimal(serializers.ModelSerializer):
 
     class Meta:
         model = Exam
-        fields = [
-            "id",
-            "course_name",
-            "course_code",
-            "start",
-            "end",
-            "rooms",
-        ]
+        fields = ["id", "course_name", "course_code", "start", "end", "rooms", "level"]
 
 
 class StudentReadSerializer(serializers.ModelSerializer):
     programme_name = serializers.ReadOnlyField(source="programme_of_study.name")
     registered_exams = ExamSerializerMinimal(many=True, read_only=True)
     fingerprint = FingerprintSerializerMinimal()
+    full_name = serializers.ReadOnlyField(source="get_full_name")
 
     class Meta:
         model = Student
@@ -52,6 +46,7 @@ class StudentReadSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "other_names",
+            "full_name",
             "student_id",
             "index_number",
             "level",

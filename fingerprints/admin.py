@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
 
-# Register your models here.
+from .models import Fingerprint
+
+
+@admin.register(Fingerprint)
+class FingerprintAdmin(admin.ModelAdmin):
+    list_display = ('id', 'created', 'file', 'binary')
+    list_filter = ('created',)

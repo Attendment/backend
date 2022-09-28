@@ -1,3 +1,4 @@
+from enum import unique
 from django.conf import settings
 from django.db import models
 from django.db.models.fields import uuid
@@ -62,6 +63,7 @@ class Student(models.Model):
         unique=True,
     )
     fingerprint = models.OneToOneField(
+        unique=True,
         verbose_name=_("Fingerprint"),
         to=Fingerprint,
         on_delete=models.CASCADE,
