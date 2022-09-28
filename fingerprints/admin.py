@@ -6,5 +6,5 @@ from .models import Fingerprint
 
 @admin.register(Fingerprint)
 class FingerprintAdmin(admin.ModelAdmin):
-    list_display = ('id', 'created', 'file', 'binary')
-    list_filter = ('created',)
+    list_display = ("id", "created", "fingerprint_id")
+    list_filter = ("created",)

@@ -18,18 +18,12 @@ class Fingerprint(models.Model):
         blank=False,
         auto_now_add=True,
     )
-    file = models.FileField(
-        verbose_name=_("Template File"),
-        upload_to="fingerprints/",
-        blank=False,
-        null=False,
+    fingerprint_id = models.CharField(
+        verbose_name=_("Fingerprint ID"), null=True, blank=True, max_length=100
     )
-    binary = models.BinaryField(
-        verbose_name=_("Fingerprint Data"), null=True, blank=True
-    )
+
+    def __str__(self):
+        return f"{self.fingerprint_id}"
 
     class Meta:
         ordering = ("-created",)
-
-    def __str__(self):
-        return f"{self.id}"

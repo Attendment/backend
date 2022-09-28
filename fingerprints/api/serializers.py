@@ -6,16 +6,16 @@ from fingerprints.models import Fingerprint
 class FingerprintReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fingerprint
-        fields = ["id", "created", "file", "binary"]
+        fields = ["id", "created", "fingerprint_id"]
 
 
 class FingerprintWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fingerprint
-        fields = ["id", "created", "file", "binary"]
+        fields = ["id", "created", "fingerprint_id"]
 
 
 class FingerprintSerializerMinimal(serializers.ModelSerializer):
     class Meta:
         model = Fingerprint
-        fields = ["id", "file", "binary"]
+        fields = ["id", "fingerprint_id"]
