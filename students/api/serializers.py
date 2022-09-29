@@ -29,7 +29,7 @@ class ExamSerializerMinimal(serializers.ModelSerializer):
 
     class Meta:
         model = Exam
-        fields = ["id", "course_name", "course_code", "start", "end", "rooms", "level"]
+        fields = ["id", "course_name", "course_code", "start", "end", "rooms", "level", "active", ]
 
 
 class StudentReadSerializer(serializers.ModelSerializer):
