@@ -4,9 +4,8 @@ from django.contrib import admin
 from .models import Student, Programme, Room, Exam
 
 
-class ProgrammeAdminInline(admin.TabularInline):
-    model = Programme
-
+class StudentAdminInline(admin.TabularInline):
+    model = Student
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
@@ -23,13 +22,13 @@ class StudentAdmin(admin.ModelAdmin):
         "programme_of_study",
     )
     list_filter = ("created", "fingerprint", "programme_of_study")
-    inlines = [ProgrammeAdminInline]
 
 
 @admin.register(Programme)
 class ProgrammeAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "college")
     search_fields = ("name",)
+    inlines = [StudentAdminInline]
 
 
 @admin.register(Room)
