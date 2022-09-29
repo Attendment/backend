@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from rest_framework.status import HTTP_200_OK
+from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -8,7 +8,8 @@ from rest_framework.response import Response
 from fingerprints.api.serializers import (
     FingerprintReadSerializer,
     FingerprintWriteSerializer,
-    FingerprintVerificationSerializer
+    FingerprintVerificationSerializer,
+    FingerprintReadVerificationSerializer
 )
 
 from fingerprints.models import Fingerprint, FingerprintVerification
@@ -34,51 +35,57 @@ def verify_fingerprint(request):
 
     """
     if request.method == "POST":
-        print(request.data)
+        # print(request.data)
     
         #  Get student associated with the given fingerprint id
         fingerprint_id = request.data["fingerprint_id"]
-        student = Student.objects.filter(fingerprint__id=int(fingerprint_id)).first()
-        print(student)
-
-        # Get registered exams and check for the active one
-        student_active_exam = None
-        for exam in student.registered_exams:
-            if exam.active:
-                student_active_exam = exam
-                break
-        
-        # Check if student is among the exam registered student
-        student_is_registered_for_active_exam = False
-        for exam_student in student_active_exam.students.all():
-            if student == exam_student:
-                student_is_registered_for_active_exam = True
-                break
-        
-        ## CHECKING FOR THE ALLOCATED ROOM
-        # Get latest exam attendance instance
-        if student_is_registered_for_active_exam:
+        student = Student.objects.filter(fingerprint__fingerprint_id=int(fingerprint_id)).first()
+        # print(student)
+        if student:
+            # Get registered exams and check for the active one
+            student_active_exam = None
+            for exam in student.registered_exams.all():
+                if exam.active:
+                    student_active_exam = exam
+                    break
+            # print(student_active_exam)
+            
+            # Check if student is among the exam registered student
+            student_is_registered_for_active_exam = False
+            for exam_student in student_active_exam.students.all():
+                if student == exam_student:
+                    student_is_registered_for_active_exam = True
+                    break
+            
+            ## CHECKING FOR THE ALLOCATED ROOM
+            # Get latest exam attendance instance
             student_is_rightly_allocated = False
-            latest_exam_attendance = ExamAttendance.objects.first()
-            for attendance_student in latest_exam_attendance.room.students:
-                if attendance_student == student:
-                    student_is_rightly_allocated = True
-        
-        FingerprintVerification.objects.create(state=student_is_rightly_allocated, student=student)
+            if student_is_registered_for_active_exam:
+                latest_exam_attendance = ExamAttendance.objects.first()
+                for attendance_student in latest_exam_attendance.room.students.all():
+                    if attendance_student == student:
+                        student_is_rightly_allocated = True
+            print(student_is_rightly_allocated)
+            FingerprintVerification.objects.create(state=student_is_rightly_allocated, student=student)
 
-        if student_is_rightly_allocated:
-            StudentAttendance.objects.create(student=student, exam=student_active_exam, room=latest_exam_attendance.room, exam_attendance=latest_exam_attendance)
-        
-        return Response(status=HTTP_200_OK)
+            if student_is_rightly_allocated:
+                StudentAttendance.objects.create(student=student, exam=student_active_exam, room=latest_exam_attendance.room, exam_attendance=latest_exam_attendance)
+            
+            return Response(status=HTTP_200_OK)
+        return Response(status=HTTP_404_NOT_FOUND)
 
 @api_view(["GET"])
 def get_latest_fingerprint_verification(request):
     if request.method == "GET":
         latest = FingerprintVerification.objects.first()
-        serializer = FingerprintVerificationSerializer(latest)
+        serializer = FingerprintReadVerificationSerializer(latest)
         
         return Response(serializer.data, HTTP_200_OK)
 
+
+
+class FingerprintVerificationViewSet(viewsets.ModelViewSet):
+    queryset = FingerprintVerification.objects.all()
 
 
 
