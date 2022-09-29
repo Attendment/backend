@@ -33,12 +33,13 @@ def verify_fingerprint(request):
     # check the room
 
     """
-    if request.POST == "POST":
+    if request.method == "POST":
         print(request.data)
     
         #  Get student associated with the given fingerprint id
         fingerprint_id = request.data["fingerprint_id"]
-        student = Student.objects.get(fingerprint_id=fingerprint_id)
+        student = Student.objects.filter(fingerprint__id=int(fingerprint_id)).first()
+        print(student)
 
         # Get registered exams and check for the active one
         student_active_exam = None
@@ -72,7 +73,7 @@ def verify_fingerprint(request):
 
 @api_view(["GET"])
 def get_latest_fingerprint_verification(request):
-    if request.GET == "GET":
+    if request.method == "GET":
         latest = FingerprintVerification.objects.first()
         serializer = FingerprintVerificationSerializer(latest)
         

@@ -43,7 +43,7 @@ class FingerprintVerification(models.Model):
         blank=False,
         auto_now_add=True,
     )
-    state = models.BooleanField(verbose_name=_("Created"), null=False)
+    state = models.BooleanField(verbose_name=_("state"), null=False)
     student = models.ForeignKey(
         to="students.Student",
         on_delete=models.CASCADE,
