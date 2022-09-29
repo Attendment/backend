@@ -36,6 +36,9 @@ class ExamAttendance(models.Model):
         related_name="exam_attendances",
     )
 
+    class Meta:
+        ordering = ("-created", )
+
     def __str__(self):
         return f"{self.exam.course_name} {self.room.name}"
 

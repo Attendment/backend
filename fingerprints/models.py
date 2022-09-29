@@ -27,3 +27,32 @@ class Fingerprint(models.Model):
 
     class Meta:
         ordering = ("-created",)
+
+class FingerprintVerification(models.Model):
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        unique=True,
+        blank=False,
+        null=False,
+        editable=False,
+    )
+    created = models.DateTimeField(
+        verbose_name=_("Created"),
+        null=False,
+        blank=False,
+        auto_now_add=True,
+    )
+    state = models.BooleanField(verbose_name=_("Created"), null=False)
+    student = models.ForeignKey(
+        to="students.Student",
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+    )
+
+    class Meta:
+        ordering = ("-created",)
+    
+    def __str__(self):
+        return f"<id:{self.id} state:{self.state} student:{self.student.get_full_name()}"

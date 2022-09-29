@@ -189,6 +189,11 @@ class Exam(models.Model):
         choices=Student.YearInSchool.choices,
         default=Student.YearInSchool.LEVEL_100,
     )
+    active = models.BooleanField(
+        verbose_name=_("Active"),
+        default=False,
+        null=False
+    )
     rooms = models.ManyToManyField(Room)
     start = models.DateTimeField(
         verbose_name=_("Start Date and Time"),
