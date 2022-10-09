@@ -13,21 +13,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 # Application definition
 
 INSTALLED_APPS = [
+    # Third party apps
+    "corsheaders",
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "jazzmin",
+    # Developer installed apps
+    "users.apps.UsersConfig",
+    "attendances.apps.AttendancesConfig",
+    "fingerprints.apps.FingerprintsConfig",
+    "students.apps.StudentsConfig",
+    # Django apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Third party apps
-    "corsheaders",
-    "rest_framework",
-    "rest_framework_simplejwt",
-    # Developer installed apps
-    "users.apps.UsersConfig",
-    "attendances.apps.AttendancesConfig",
-    "fingerprints.apps.FingerprintsConfig",
-    "students.apps.StudentsConfig",
 ]
 
 MIDDLEWARE = [
@@ -145,3 +147,5 @@ CORS_ALLOW_METHODS = [
     "POST",
     "PUT",
 ]
+
+# Django Jazzmin
